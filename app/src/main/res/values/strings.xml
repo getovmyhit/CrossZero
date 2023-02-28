@@ -2,5 +2,9 @@
     <string name="app_name">Cross&amp;Zero</string>
     <string name="title_activity_game">GameActivity</string>
     <string name="start_tittle">ВЫБЕРИТЕ, КТО НАЧИНАЕТ СВОЙ ХОД?</string>
-    <string name="victory">ПОБЕДИЛ ИГРОК</string>
+    <string name="victory">ПОБЕДИЛ ИГРОК:</string>
+    <string name="restart">НАЧАТЬ ЗАНОВО</string>
+    <string name="dialog_tittle_message">Cross&amp;Zero</string>
+    <string name="nobody">НИЧЬЯ</string>
+    <string name="dialog_about_message">Начать новую игру?</string>
 </resources>

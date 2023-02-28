@@ -1,8 +1,11 @@
 package com.example.crosszero
 
-import androidx.appcompat.app.AppCompatActivity
+import android.app.AlertDialog
+import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
-import androidx.core.view.isVisible
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_game.*
 
 
@@ -11,46 +14,6 @@ class GameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
-        fun checkWin () {
-            when {
-                button11.text == button12.text && button11.text == button13.text -> txtvictory.isVisible
-                button11.text == button21.text && button11.text == button31.text -> txtvictory.isVisible
-                button11.text == button22.text && button11.text == button33.text -> txtvictory.isVisible
-
-                button12.text == button22.text && button12.text == button32.text -> txtvictory.isVisible
-                button12.text == button11.text && button12.text == button13.text -> txtvictory.isVisible
-
-                button13.text == button23.text && button13.text == button33.text -> txtvictory.isVisible
-                button13.text == button12.text && button13.text == button11.text -> txtvictory.isVisible
-                button13.text == button22.text && button13.text == button31.text -> txtvictory.isVisible
-
-                button21.text == button22.text && button21.text == button23.text -> txtvictory.isVisible
-                button21.text == button11.text && button21.text == button31.text -> txtvictory.isVisible
-
-                button22.text == button21.text && button22.text == button23.text -> txtvictory.isVisible
-                button22.text == button11.text && button12.text == button33.text -> txtvictory.isVisible
-                button22.text == button12.text && button22.text == button32.text -> txtvictory.isVisible
-
-                button23.text == button13.text && button23.text == button33.text -> txtvictory.isVisible
-                button23.text == button22.text && button23.text == button21.text -> txtvictory.isVisible
-
-                button31.text == button21.text && button31.text == button11.text -> txtvictory.isVisible
-                button31.text == button22.text && button31.text == button13.text -> txtvictory.isVisible
-                button31.text == button32.text && button31.text == button33.text -> txtvictory.isVisible
-
-                button32.text == button22.text && button32.text == button12.text -> txtvictory.isVisible
-                button32.text == button31.text && button32.text == button33.text -> txtvictory.isVisible
-
-                button33.text == button22.text && button33.text == button11.text -> txtvictory.isVisible
-                button33.text == button32.text && button33.text == button31.text -> txtvictory.isVisible
-                button33.text == button23.text && button33.text == button13.text -> txtvictory.isVisible
-            else -> {
-                txtvictory.isVisible
-                txtvictory.text ="Еще никто не выиграл"
-            }
-            }
-
-        }
         button11.text = ""
         button12.text = ""
         button13.text = ""
@@ -60,26 +23,58 @@ class GameActivity : AppCompatActivity() {
         button31.text = ""
         button32.text = ""
         button33.text = ""
-
+        val gamerZero = "ZERO"
+        val gamerCross = "CROSS"
         var stateZero = intent.getBooleanExtra("zerotrue", false)
         var stateCross = intent.getBooleanExtra("crosstrue", false)
+        var restart = Intent (this, MainActivity::class.java)
+        val builder = AlertDialog.Builder(this)
+        builder
+            .setTitle(R.string.dialog_tittle_message)
+            .setMessage(R.string.dialog_about_message)
+            .setIcon(android.R.drawable.ic_dialog_info)
+            .setPositiveButton("Да", DialogInterface.OnClickListener { dialog, which ->
+                startActivity(restart)
+            })
+            .setNegativeButton("Нет", DialogInterface.OnClickListener { dialog, which ->
+                finishAffinity()
+            })
+            .create()
 
+                fun checkWin (kto: String) {
+            when {
+                button11.text!=""&&button11.text == button12.text && button11.text == button13.text -> txtvictory.text = txtvictory.text.toString().plus(" $kto")
 
-        checkwinz.setOnClickListener {
-            checkWin()
-        }
+                button11.text!=""&&button11.text == button21.text && button11.text == button31.text -> txtvictory.text = txtvictory.text.toString().plus(" $kto")
+                button11.text!=""&&button11.text == button22.text && button11.text == button33.text -> txtvictory.text = txtvictory.text.toString().plus(" $kto")
+
+                button12.text!=""&&button12.text == button22.text && button12.text == button32.text -> txtvictory.text = txtvictory.text.toString().plus(" $kto")
+
+                button13.text!=""&&button13.text == button23.text && button13.text == button33.text -> txtvictory.text = txtvictory.text.toString().plus(" $kto")
+
+                button21.text!=""&& button21.text == button22.text && button21.text == button23.text -> txtvictory.text = txtvictory.text.toString().plus(" $kto")
+                button31.text!=""&&button31.text == button22.text && button31.text == button13.text -> txtvictory.text = txtvictory.text.toString().plus(" $kto")
+                button31.text!=""&&button31.text == button32.text && button31.text == button33.text -> txtvictory.text = txtvictory.text.toString().plus(" $kto")
+                button11.text!=""&&button12.text!=""&&button13.text!=""&& button21.text!=""&&button22.text!=""&&button23.text!=""&&button31.text!=""&&button32.text!=""&&button33.text!="" ->
+                    txtvictory.text = "НИЧЬЯ"
+            }
+            if (txtvictory.text=="НИЧЬЯ")
+                builder.show()
+            else {}
+            }
+
         button11.setOnClickListener {
             if (stateCross == true && button11.text.isEmpty()) {
                 button11.text = "X"
                 stateCross = false
                 stateZero = true
-                checkWin()
+                checkWin(gamerCross)
             }
             if (stateCross == false && button11.text.isEmpty()) {
                 button11.text = "O"
                 stateCross = true
                 stateZero = false
-                checkWin()
+                checkWin(gamerZero)
             } else {
             }
         }
@@ -89,13 +84,13 @@ class GameActivity : AppCompatActivity() {
                     button12.text = "X"
                     stateCross = false
                     stateZero = true
-                    checkWin()
+                    checkWin(gamerCross)
                 }
                 stateCross == false && button12.text.isEmpty() -> {
                     button12.text = "O"
                     stateCross = true
                     stateZero = false
-                    checkWin()
+                    checkWin(gamerZero)
                 }
                 else -> {}
             }
@@ -106,13 +101,13 @@ class GameActivity : AppCompatActivity() {
                     button13.text = "X"
                     stateCross = false
                     stateZero = true
-                    checkWin()
+                    checkWin(gamerCross)
                 }
                 stateCross == false && button13.text.isEmpty() -> {
                     button13.text = "O"
                     stateCross = true
                     stateZero = false
-                    checkWin()
+                    checkWin(gamerZero)
                 }
                 else -> {}
             }
@@ -123,13 +118,13 @@ class GameActivity : AppCompatActivity() {
                     button21.text = "X"
                     stateCross = false
                     stateZero = true
-                    checkWin()
+                    checkWin(gamerCross)
                 }
                 stateCross == false && button21.text.isEmpty() -> {
                     button21.text = "O"
                     stateCross = true
                     stateZero = false
-                    checkWin()
+                    checkWin(gamerZero)
                 }
                 else -> {
                 }
@@ -141,13 +136,13 @@ class GameActivity : AppCompatActivity() {
                     button22.text = "X"
                     stateCross = false
                     stateZero = true
-                    checkWin()
+                    checkWin(gamerCross)
                 }
                 stateCross == false && button22.text.isEmpty() -> {
                     button22.text = "O"
                     stateCross = true
                     stateZero = false
-                    checkWin()
+                    checkWin(gamerZero)
                 }
                 else -> {}
             }
@@ -158,13 +153,13 @@ class GameActivity : AppCompatActivity() {
                     button23.text = "X"
                     stateCross = false
                     stateZero = true
-                    checkWin()
+                    checkWin(gamerCross)
                 }
                 stateCross == false && button23.text.isEmpty() -> {
                     button23.text = "O"
                     stateCross = true
                     stateZero = false
-                    checkWin()
+                    checkWin(gamerZero)
                 }
                 else -> {}
             }
@@ -175,30 +170,29 @@ class GameActivity : AppCompatActivity() {
                     button31.text = "X"
                     stateCross = false
                     stateZero = true
-                    checkWin()
+                    checkWin(gamerCross)
                 }
                 stateCross == false && button31.text.isEmpty() -> {
                     button31.text = "O"
                     stateCross = true
                     stateZero = false
-                    checkWin()
+                    checkWin(gamerZero)
                 }
                 else -> {}
             }
         }
-
         button32.setOnClickListener {
             if (stateCross == true &&  button32.text.isEmpty()) {
                 button32.text = "X"
                 stateCross = false
                 stateZero = true
-                checkWin()
+                checkWin(gamerCross)
             }
             if (stateCross == false &&  button32.text.isEmpty()){
                 button32.text = "O"
                 stateCross = true
                 stateZero = false
-                checkWin()
+                checkWin(gamerZero)
             }
             else{}
         }
@@ -207,16 +201,21 @@ class GameActivity : AppCompatActivity() {
                 button33.text = "X"
                 stateCross = false
                 stateZero = true
-                checkWin()
+                checkWin(gamerCross)
             }
             if (stateCross == false &&  button33.text.isEmpty()) {
                 button33.text = "O"
                 stateCross = true
                 stateZero = false
-                checkWin()
+                checkWin(gamerZero)
             }
             else {
             }
+        }
+
+        restartgame.setOnClickListener {
+            finish()
+            startActivity(restart)
         }
 
     }

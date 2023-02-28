@@ -24,5 +24,6 @@ class MainActivity : AppCompatActivity() {
             gamescreen.putExtra("zerotrue", zero)
             startActivity(gamescreen)
         }
+
     }
 }
