@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
 
+@Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -13,7 +14,8 @@ class MainActivity : AppCompatActivity() {
         var cross = false
         var zero = false
         var gamescreen = Intent(this, GameActivity::class.java)
-
+        buttonX.setBackgroundColor(resources.getColor(R.color.pinkcream))
+        buttonO.setBackgroundColor(resources.getColor(R.color.bluesky))
         buttonX.setOnClickListener {
             cross = true
             gamescreen.putExtra("crosstrue", cross)
