@@ -7,6 +7,14 @@
     tools:context=".MainActivity"
     tools:ignore="ExtraText">
 
+<!--    <Switch
+        android:id="@+id/switchtheme"
+        android:layout_width="90sp"
+        android:layout_height="50sp"
+        android:text=""
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />-->
+
     <TextView
         android:id="@+id/nameGame"
         android:layout_width="wrap_content"

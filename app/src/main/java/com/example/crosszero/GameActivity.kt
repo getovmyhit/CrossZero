@@ -213,7 +213,7 @@ class GameActivity : AppCompatActivity() {
             }
             if (button11.text != "" && button12.text != "" && button13.text != "" && button21.text != "" && button22.text != "" && button23.text != "" && button31.text != "" && button32.text != "" && button33.text != "") {
                 txtvictory.text = "НИЧЬЯ!"
-                txtvictory.textAlignment = View.TEXT_ALIGNMENT_TEXT_END
+                txtvictory.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
                 txtvictory.isVisible=true
                 button11.isEnabled=false
                 button12.isEnabled=false
